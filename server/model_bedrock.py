@@ -12,6 +12,7 @@ from langchain_aws import BedrockLLM
 from langchain_core.language_models.llms import LLM
 from typing import Any, Dict
 import os
+from server.variables import MODEL_ID
 
 
 class BedrockModel:
@@ -29,6 +30,6 @@ class BedrockModel:
 
 # Example usage (for testing only, not run on import)
 if __name__ == "__main__":
-    model = BedrockModel(model_id="anthropic.claude-v2")
+    model = BedrockModel(model_id=MODEL_ID)
     prompt = "Summarize the following text: LangChain is a framework for developing applications powered by language models."
     print(model.generate(prompt))
