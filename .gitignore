@@ -5,3 +5,7 @@ build/
 *.env
 *.pytest*
 __pycache__/
+.github
+*.pyc
+.vscode
+*.trash
