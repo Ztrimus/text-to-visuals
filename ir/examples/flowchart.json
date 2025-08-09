@@ -1,0 +1,59 @@
+{
+    "type": "flowchart",
+    "meta": {
+        "direction": "TD",
+        "title": "Simple flow"
+    },
+    "data": {
+        "nodes": [
+            {
+                "id": "A",
+                "label": "Start"
+            },
+            {
+                "id": "B",
+                "label": "Step B"
+            },
+            {
+                "id": "C",
+                "label": "Step C"
+            },
+            {
+                "id": "D",
+                "label": "Decision?"
+            },
+            {
+                "id": "E",
+                "label": "Path E"
+            },
+            {
+                "id": "F",
+                "label": "Path F"
+            }
+        ],
+        "edges": [
+            {
+                "source": "A",
+                "target": "B"
+            },
+            {
+                "source": "B",
+                "target": "C"
+            },
+            {
+                "source": "C",
+                "target": "D"
+            },
+            {
+                "source": "D",
+                "target": "E",
+                "label": "yes"
+            },
+            {
+                "source": "D",
+                "target": "F",
+                "label": "no"
+            }
+        ]
+    }
+}

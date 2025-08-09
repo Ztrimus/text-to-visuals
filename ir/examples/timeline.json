@@ -1,0 +1,30 @@
+{
+    "type": "timeline",
+    "meta": {
+        "title": "Cosmic Timeline"
+    },
+    "data": {
+        "events": [
+            {
+                "id": "1",
+                "label": "Big Bang",
+                "time": "13.8e9 years ago"
+            },
+            {
+                "id": "2",
+                "label": "First humans",
+                "time": "300k years ago"
+            },
+            {
+                "id": "3",
+                "label": "Jesus born",
+                "time": "2,000 years ago"
+            },
+            {
+                "id": "4",
+                "label": "WWII",
+                "time": "1939-1945"
+            }
+        ]
+    }
+}

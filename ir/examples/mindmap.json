@@ -1,0 +1,40 @@
+{
+    "type": "mind_map",
+    "meta": {
+        "title": "Computer Science"
+    },
+    "data": {
+        "root": {
+            "id": "root",
+            "label": "Computer Science"
+        },
+        "children": [
+            {
+                "id": "ai",
+                "label": "AI"
+            },
+            {
+                "id": "net",
+                "label": "Networks"
+            },
+            {
+                "id": "sec",
+                "label": "Security"
+            }
+        ],
+        "edges": [
+            {
+                "source": "root",
+                "target": "ai"
+            },
+            {
+                "source": "root",
+                "target": "net"
+            },
+            {
+                "source": "root",
+                "target": "sec"
+            }
+        ]
+    }
+}
