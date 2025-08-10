@@ -8,24 +8,28 @@ It is designed to be imported and used by other backend components for text-to-I
 - Follows modular, extensible design for future model support.
 """
 
-from langchain_aws import BedrockLLM
+from langchain_aws import BedrockLLM, ChatBedrock
 from langchain_core.language_models.llms import LLM
-from typing import Any, Dict
 import os
 from server.variables import MODEL_ID
 
 
 class BedrockModel:
-    """Wrapper for AWS Bedrock LLMs via LangChain."""
+    """Wrapper for AWS Bedrock LLMs via LangChain. Uses ChatBedrock for chat models, BedrockLLM for legacy models."""
 
-    def __init__(self, model_id: str, region: str = None, **kwargs):
+    def __init__(self, model_id: str, region: str = "us-east-1", **kwargs):
         self.model_id = model_id
         self.region = region or os.environ.get("AWS_REGION", "us-east-1")
-        self.llm: LLM = BedrockLLM(model_id=model_id, region=self.region, **kwargs)
+        # Use ChatBedrock for Claude 3/Opus, BedrockLLM for legacy
+        if any(x in model_id for x in ["claude-3", "opus", "sonnet", "haiku"]):
+            self.llm = ChatBedrock(model=model_id, region=self.region, **kwargs)
+        else:
+            self.llm = BedrockLLM(model=model_id, region=self.region, **kwargs)
 
     def generate(self, prompt: str, **kwargs) -> str:
         """Generate a response from the Bedrock model."""
-        return self.llm.invoke(prompt, **kwargs)
+        result = self.llm.invoke(prompt, **kwargs)
+        return result.content
 
 
 # Example usage (for testing only, not run on import)

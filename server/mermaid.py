@@ -1,4 +1,4 @@
-from .models import Diagram, GraphData, TimelineData, MindMapData
+from server.schemas.diagram import Diagram, GraphData, TimelineData, MindMapData
 
 
 def to_mermaid(diagram: Diagram) -> str:

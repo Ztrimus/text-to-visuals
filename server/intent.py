@@ -12,11 +12,7 @@ from langchain.output_parsers import PydanticOutputParser
 from langchain.chains.llm import LLMChain
 from server.prompts.intent_prompt import INTENT_EXTRACTION_PROMPT
 from server.schemas.intent_output import IntentOutput
-from server.variables import MODEL_ID
-
-
-# Supported diagram types (should match prompt)
-DIAGRAM_TYPES = ["flowchart", "timeline", "mind_map", "table"]
+from server.variables import MODEL_ID, DIAGRAM_TYPES
 
 
 class IntentClassifier:

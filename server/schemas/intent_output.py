@@ -1,12 +1,14 @@
 """
 Pydantic schema for intent extraction output.
 """
+
 from typing import List, Optional
 from pydantic import BaseModel, Field
 
+
 class IntentOutput(BaseModel):
     intent: str
-    diagram_type: str
+    diagram_type: Optional[str] = None
     entities: Optional[List[str]] = Field(default_factory=list)
     relationships: Optional[List[str]] = Field(default_factory=list)
     actions: Optional[List[str]] = Field(default_factory=list)

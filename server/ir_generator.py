@@ -7,7 +7,7 @@ This module generates a diagram IR (intermediate representation) from user text 
 """
 
 from server.visual_structure import VisualStructureExtractor
-from server.models import Diagram
+from server.schemas.diagram import Diagram
 from server.variables import MODEL_ID
 
 from langchain.output_parsers import PydanticOutputParser
@@ -27,7 +27,9 @@ class IRGenerator:
         self.prompt = PromptTemplate(
             template=prompt_str,
             input_variables=["visual_structure"],
-            partial_variables={"schema": Diagram.schema_json()},
+            partial_variables={
+                "format_instructions": self.parser.get_format_instructions()
+            },
         )
         from server.model_bedrock import BedrockModel
 

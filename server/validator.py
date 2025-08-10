@@ -1,5 +1,5 @@
 from pydantic import ValidationError
-from .models import Diagram, GraphData, TimelineData, MindMapData
+from server.schemas.diagram import Diagram, GraphData, TimelineData, MindMapData
 
 
 def validate(diagram_dict: dict) -> Diagram:
