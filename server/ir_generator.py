@@ -21,11 +21,8 @@ class IRGenerator:
     def __init__(self, model_id=MODEL_ID):
         self.visual_extractor = VisualStructureExtractor(model_id=model_id)
         self.parser = PydanticOutputParser(pydantic_object=Diagram)
-        prompt_str = IR_GENERATION_PROMPT.replace(
-            "{format_instructions}", self.parser.get_format_instructions()
-        )
         self.prompt = PromptTemplate(
-            template=prompt_str,
+            template=IR_GENERATION_PROMPT,
             input_variables=["visual_structure"],
             partial_variables={
                 "format_instructions": self.parser.get_format_instructions()
