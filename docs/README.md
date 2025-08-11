@@ -35,6 +35,28 @@ Convert textual descriptions into visual diagrams using LLMs and modular orchest
 - Output parsing uses LangChain's recommended output parsers
 
 ## Improvements & Next Steps
+
+## Recent Improvements & Best Practices (2025)
+
+- **Pydantic v2+ Compatibility:**
+	- All usages of `.dict()` replaced with `.model_dump()` for Pydantic models to avoid deprecation warnings and ensure forward compatibility.
+	- Validation functions now accept both dicts and Pydantic model instances, with robust error handling (try/except for TypeError, AssertionError, ValueError, and generic Exception).
+
+- **Mermaid/MMD Node Naming:**
+	- Avoid using reserved keywords (like `end`) as node names in Mermaid diagrams. Always ensure node references match their definitions to prevent parse errors.
+
+- **Bedrock Model Selection Logic:**
+	- Backend supports both `ChatBedrock` and `BedrockLLM` based on model type, with correct parameter usage for Claude 3/Opus and legacy models. This ensures compatibility with the latest AWS Bedrock offerings.
+
+- **Prompt Escaping and Format Instructions:**
+	- Use double curly braces and string replacement for prompt formatting, especially for JSON examples in prompts, to avoid formatting errors and ensure reliable output parsing.
+
+- **Error Handling and Debugging Tips:**
+	- When running scripts that import from the `server` package, use `python -m server.validator` from the project root or set `PYTHONPATH` appropriately to avoid import errors.
+
+- **General Best Practices:**
+	- Modularize all prompts and schemas for maintainability.
+	- Document new features and backend changes promptly in this folder.
 - Add more diagram types and models
 - Enhance frontend UX and diagram editing
 - Integrate LangSmith for observability
