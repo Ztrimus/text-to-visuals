@@ -1,0 +1,31 @@
+flowchart TD
+start["Start: Need to Write Code"]
+assess_task["Assess Task Complexity"]
+traditional_coding["Traditional Coding<br>(Cursor/Copilot)"]
+vibe_coding_decision["Is it a Leaf Node?"]
+prepare_context["Prepare Context<br>(15-20 min)"]
+act_as_pm["Act as PM for Claude:<br>• Define requirements<br>• Tour codebase<br>• Set constraints"]
+let_claude_cook["Let Claude Generate Code"]
+design_verification["Design Verification:<br>• Stress tests<br>• Input/output checks<br>• End-to-end tests"]
+review_tests["Review Tests Only<br>(Not Implementation)"]
+tests_pass["Do Tests Pass?"]
+iterate_claude["Iterate with Claude"]
+merge_code["Merge to Production"]
+end_node["End: Code Deployed"]
+core_architecture["Core Architecture:<br>Write/Review Manually"]
+start --> assess_task
+assess_task -->|< 1 hour task| traditional_coding
+assess_task -->|> 1 hour task| vibe_coding_decision
+vibe_coding_decision -->|Yes| prepare_context
+vibe_coding_decision -->|"No (Core/Trunk)"| core_architecture
+prepare_context --> act_as_pm
+act_as_pm --> let_claude_cook
+let_claude_cook --> design_verification
+design_verification --> review_tests
+review_tests --> tests_pass
+tests_pass -->|Yes| merge_code
+tests_pass -->|No| iterate_claude
+iterate_claude --> let_claude_cook
+traditional_coding --> merge_code
+core_architecture --> merge_code
+merge_code --> end_node
