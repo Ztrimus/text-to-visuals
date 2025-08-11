@@ -31,5 +31,3 @@ class Workflow:
         diagram = validate(ir)
         # 3. Mermaid rendering
         return to_mermaid(diagram)
-
-    # _stub_ir removed: now using LLM-powered IR generation
