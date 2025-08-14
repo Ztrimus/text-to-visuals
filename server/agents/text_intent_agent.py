@@ -14,7 +14,8 @@ from langchain.output_parsers import PydanticOutputParser
 from server.prompts.intent_prompt import INTENT_EXTRACTION_PROMPT
 from server.schemas.intent_output import IntentOutput
 from server.config.variables import MODEL_ID, DIAGRAM_TYPES
-from server.utils.logger import get_logger
+from server.utils.helper import measure_execution_time
+from server.utils.logger import get_logger, pretty_log
 
 logger = get_logger(os.path.basename(__file__))
 
@@ -37,9 +38,10 @@ class IntentClassifier:
         # Use RunnableSequence pipeline: prompt | llm | output_parser
         self.chain = self.prompt | self.model.llm | self.parser
 
+    @measure_execution_time
     def classify(self, text: str) -> dict:
         """Classify user text to intent and diagram type, with context fields."""
         logger.info("[IntentClassifier] Classifying text...")
         result = self.chain.invoke({"user_text": text})
-        logger.info("[IntentClassifier] Classification result: %s", result)
+        pretty_log(logger, "[IntentClassifier] Classification result", result)
         return result

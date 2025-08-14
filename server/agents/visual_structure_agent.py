@@ -6,6 +6,7 @@ This module extracts a structured, but not yet Pydantic-validated, visual repres
 - Step 2 (in ir_generator.py): convert this to a Pydantic Diagram model.
 """
 
+import os
 from typing import Dict
 
 from langchain.prompts import PromptTemplate
@@ -14,6 +15,10 @@ from langchain.chains.llm import LLMChain
 from server.services.model_bedrock import BedrockModel
 from server.prompts.visual_structure_prompt import VISUAL_STRUCTURE_PROMPT
 from server.config.variables import MODEL_ID
+from server.utils.helper import measure_execution_time
+from server.utils.logger import get_logger, pretty_log
+
+logger = get_logger(os.path.basename(__file__))
 
 
 class VisualStructureExtractor:
@@ -29,8 +34,10 @@ class VisualStructureExtractor:
         # Use RunnableSequence pipeline: prompt | llm | output_parser
         self.chain = self.prompt | self.model.llm | self.parser
 
+    @measure_execution_time
     def extract(self, user_text: str, intent_fields: dict) -> Dict:
-        print(f"[VisualStructureExtractor] Extracting visual structure for text: {user_text}")
-        result = self.chain.invoke({"user_text": user_text, "intent_fields": intent_fields})
-        print(f"[VisualStructureExtractor] Extraction result: {result}")
+        result = self.chain.invoke(
+            {"user_text": user_text, "intent_fields": intent_fields}
+        )
+        pretty_log(logger, "[VisualStructureExtractor] Extraction result", result)
         return result
