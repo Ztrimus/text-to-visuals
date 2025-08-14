@@ -21,7 +21,6 @@ class Workflow:
     def __init__(self):
         self.intent = IntentClassifier()
         self.ir_generator = IRGenerator()
-        # Add more components as needed
 
     def run(self, text: str) -> str:
         # 1. Intent understanding
@@ -30,7 +29,8 @@ class Workflow:
         ir = self.ir_generator.generate_ir(text, intent_result)
         diagram = validate(ir)
         # 3. Mermaid rendering
-        return to_mermaid(diagram)
+        mermaid_code = to_mermaid(diagram)
+        return mermaid_code
 
     def run_example(self, text: str) -> str:
         return """
