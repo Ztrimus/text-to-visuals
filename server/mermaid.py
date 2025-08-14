@@ -92,7 +92,8 @@ def to_mermaid(diagram: Diagram) -> str:
             src = node_id_map.get(e.source, sanitize_id(e.source))
             tgt = node_id_map.get(e.target, sanitize_id(e.target))
             if e.label:
-                lines.append(f'{src} --"{e.label}"--> {tgt}')
+                safe_label = sanitize_label(e.label)
+                lines.append(f'{src} --"{safe_label}"--> {tgt}')
             else:
                 lines.append(f"{src} --> {tgt}")
         return "\n".join(lines)

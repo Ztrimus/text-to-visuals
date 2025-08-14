@@ -19,17 +19,26 @@ from server.ir_generator import IRGenerator
 
 class Workflow:
     def __init__(self):
+        print("[Workflow] Initializing Workflow components...")
         self.intent = IntentClassifier()
         self.ir_generator = IRGenerator()
 
     def run(self, text: str) -> str:
+        print(f"[Workflow] Received input: {text}")
         # 1. Intent understanding
+        print("[Workflow] Step 1: Intent understanding...")
         intent_result = self.intent.classify(text)
+        print(f"[Workflow] Intent result: {intent_result}")
         # 2. IR generation (LLM-powered, pass all intent fields)
+        print("[Workflow] Step 2: IR generation...")
         ir = self.ir_generator.generate_ir(text, intent_result)
+        print(f"[Workflow] IR: {ir}")
         diagram = validate(ir)
+        print(f"[Workflow] Validated diagram: {diagram}")
         # 3. Mermaid rendering
+        print("[Workflow] Step 3: Mermaid rendering...")
         mermaid_code = to_mermaid(diagram)
+        print(f"[Workflow] Mermaid code generated.")
         return mermaid_code
 
     def run_example(self, text: str) -> str:

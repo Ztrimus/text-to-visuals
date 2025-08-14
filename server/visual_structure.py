@@ -19,6 +19,7 @@ from server.variables import MODEL_ID
 class VisualStructureExtractor:
 
     def __init__(self, model_id=MODEL_ID):
+        print(f"[VisualStructureExtractor] Initializing with model_id: {model_id}")
         self.model = BedrockModel(model_id=model_id)
         self.parser = JsonOutputParser()
         self.prompt = PromptTemplate(
@@ -30,4 +31,9 @@ class VisualStructureExtractor:
         )
 
     def extract(self, user_text: str, intent_fields: dict) -> Dict:
-        return self.chain.run(user_text=user_text, intent_fields=intent_fields)
+        print(
+            f"[VisualStructureExtractor] Extracting visual structure for text: {user_text}"
+        )
+        result = self.chain.run(user_text=user_text, intent_fields=intent_fields)
+        print(f"[VisualStructureExtractor] Extraction result: {result}")
+        return result

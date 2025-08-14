@@ -18,6 +18,7 @@ from server.variables import MODEL_ID, DIAGRAM_TYPES
 class IntentClassifier:
 
     def __init__(self, model_id=MODEL_ID):
+        print(f"[IntentClassifier] Initializing with model_id: {model_id}")
         self.model = BedrockModel(model_id=model_id)
         self.parser = PydanticOutputParser(pydantic_object=IntentOutput)
         # Prepare prompt with format instructions injected
@@ -35,4 +36,7 @@ class IntentClassifier:
 
     def classify(self, text: str) -> dict:
         """Classify user text to intent and diagram type, with context fields."""
-        return self.chain.run(user_text=text)
+        print(f"[IntentClassifier] Classifying text: {text}")
+        result = self.chain.run(user_text=text)
+        print(f"[IntentClassifier] Classification result: {result}")
+        return result

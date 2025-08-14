@@ -19,6 +19,7 @@ from server.prompts.ir_generation_prompt import IR_GENERATION_PROMPT
 class IRGenerator:
 
     def __init__(self, model_id=MODEL_ID):
+        print(f"[IRGenerator] Initializing with model_id: {model_id}")
         self.visual_extractor = VisualStructureExtractor(model_id=model_id)
         self.parser = PydanticOutputParser(pydantic_object=Diagram)
         self.prompt = PromptTemplate(
@@ -36,7 +37,11 @@ class IRGenerator:
         )
 
     def generate_ir(self, text: str, intent_fields: dict) -> dict:
+        print(f"[IRGenerator] Generating IR for text: {text}")
         # Step 1: Extract visual structure (dict)
         visual_structure = self.visual_extractor.extract(text, intent_fields)
+        print(f"[IRGenerator] Extracted visual structure: {visual_structure}")
         # Step 2: Convert to Pydantic Diagram model
-        return self.chain.run(visual_structure=visual_structure)
+        result = self.chain.run(visual_structure=visual_structure)
+        print(f"[IRGenerator] IR result: {result}")
+        return result
