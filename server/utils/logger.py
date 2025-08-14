@@ -7,6 +7,7 @@ Copyright (c) 2023-2025 Saurabh Zinjad. All rights reserved | https://github.com
 """
 
 import logging
+from pprint import pprint
 from typing import Optional
 import json
 import sys
@@ -53,5 +54,9 @@ def pretty_log(logger, msg, data=None, level="info"):
         if isinstance(data, (dict, list)):
             msg = f"{msg}\n{json.dumps(data, indent=2, ensure_ascii=False)}"
         else:
-            msg = f"{msg}: {data}"
+            try:
+                pprint(data.model_dump())
+            except Exception as e:
+                logger.error("Error pretty-printing data: %s", e)
+                msg = f"{msg}: {data}"
     getattr(logger, level)(msg)
