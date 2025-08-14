@@ -10,7 +10,7 @@ from server.services.model_bedrock import BedrockModel
 
 from langchain.prompts import PromptTemplate
 from langchain.output_parsers import PydanticOutputParser
-from langchain.chains.llm import LLMChain
+
 from server.prompts.intent_prompt import INTENT_EXTRACTION_PROMPT
 from server.schemas.intent_output import IntentOutput
 from server.config.variables import MODEL_ID, DIAGRAM_TYPES
@@ -22,7 +22,7 @@ logger = get_logger(os.path.basename(__file__))
 class IntentClassifier:
 
     def __init__(self, model_id=MODEL_ID):
-        print(f"[IntentClassifier] Initializing with model_id: {model_id}")
+        logger.info("[IntentClassifier] Initializing with model_id: %s", model_id)
         self.model = BedrockModel(model_id=model_id)
         self.parser = PydanticOutputParser(pydantic_object=IntentOutput)
         # Prepare prompt with format instructions injected
@@ -34,15 +34,12 @@ class IntentClassifier:
                 "diagram_types": ", ".join(DIAGRAM_TYPES),
             },
         )
-        self.chain = LLMChain(
-            llm=self.model.llm, prompt=self.prompt, output_parser=self.parser
-        )
+        # Use RunnableSequence pipeline: prompt | llm | output_parser
+        self.chain = self.prompt | self.model.llm | self.parser
 
     def classify(self, text: str) -> dict:
         """Classify user text to intent and diagram type, with context fields."""
-        print(f"[IntentClassifier] Classifying text...")
-        logger.info("Classifying text...")
-        result = self.chain.run(user_text=text)
-        print(f"[IntentClassifier] Classification result: {result}")
-        logger.info(f"Classification result: {result}")
+        logger.info("[IntentClassifier] Classifying text...")
+        result = self.chain.invoke({"user_text": text})
+        logger.info("[IntentClassifier] Classification result: %s", result)
         return result

@@ -26,14 +26,11 @@ class VisualStructureExtractor:
             template=VISUAL_STRUCTURE_PROMPT,
             input_variables=["user_text", "intent_fields"],
         )
-        self.chain = LLMChain(
-            llm=self.model.llm, prompt=self.prompt, output_parser=self.parser
-        )
+        # Use RunnableSequence pipeline: prompt | llm | output_parser
+        self.chain = self.prompt | self.model.llm | self.parser
 
     def extract(self, user_text: str, intent_fields: dict) -> Dict:
-        print(
-            f"[VisualStructureExtractor] Extracting visual structure for text: {user_text}"
-        )
-        result = self.chain.run(user_text=user_text, intent_fields=intent_fields)
+        print(f"[VisualStructureExtractor] Extracting visual structure for text: {user_text}")
+        result = self.chain.invoke({"user_text": user_text, "intent_fields": intent_fields})
         print(f"[VisualStructureExtractor] Extraction result: {result}")
         return result
