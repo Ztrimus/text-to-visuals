@@ -32,16 +32,16 @@ class Workflow:
     def run(self, text: str) -> str:
         logger.info("Received input")
 
-        logger.info("%s\nStep 1: Intent understanding...\n%s\n", "=" * 20, "=" * 20)
+        logger.info("\n\n%s\nStep 1: Intent understanding...\n%s", "=" * 20, "=" * 20)
         intent_result = self.intent.classify(text)
 
-        logger.info("%s\nStep 2: IR generation...\n%s\n", "=" * 20, "=" * 20)
+        logger.info("\n\n%s\nStep 2: IR generation...\n%s", "=" * 20, "=" * 20)
         ir = self.ir_generator.generate_ir(text, intent_result)
         # logger.info("IR: %s", ir)
         diagram = validate(ir)
         logger.info("Validated diagram: %s", diagram)
 
-        logger.info("%s\nStep 3: Mermaid rendering...\n%s\n", "=" * 20, "=" * 20)
+        logger.info("\n\n%s\nStep 3: Mermaid rendering...\n%s", "=" * 20, "=" * 20)
         mermaid_code = to_mermaid(diagram)
         logger.info("Mermaid code generated.")
         return mermaid_code
