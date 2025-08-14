@@ -8,7 +8,7 @@ logger = get_logger(os.path.basename(__file__))
 
 def validate(diagram_dict: dict) -> Diagram:
     try:
-        logger.info(f"Validating diagram dict: {diagram_dict}")
+        logger.info(f"Validating diagram ...")
         # Accept both dict and Diagram
         if isinstance(diagram_dict, Diagram):
             d = diagram_dict
