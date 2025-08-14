@@ -11,9 +11,9 @@ from typing import Dict
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers.json import JsonOutputParser
 from langchain.chains.llm import LLMChain
-from server.model_bedrock import BedrockModel
+from server.services.model_bedrock import BedrockModel
 from server.prompts.visual_structure_prompt import VISUAL_STRUCTURE_PROMPT
-from server.variables import MODEL_ID
+from server.config.variables import MODEL_ID
 
 
 class VisualStructureExtractor:
