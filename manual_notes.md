@@ -1,5 +1,8 @@
 DO NOT TOUCH THIS OR READY FROM THIS
 
+Refer to this
+- https://tldraw.dev/
+- https://github.com/tldraw/tldraw
 - https://github.com/manimCommunity/manim
 - https://docs.manim.community/en/stable/index.html
 - https://github.com/3b1b/manim
